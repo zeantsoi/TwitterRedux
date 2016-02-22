@@ -20,14 +20,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         
-        TwitterClient.SharedInstance.homeTimelineWithParams(nil) { (tweets, error) -> () in
-            self.tweets = tweets
-            for tweet in tweets! {
+        TwitterClient.SharedInstance.homeTimelineWithParams(nil) { (tweetObjects, error) -> () in
+            self.tweets = tweetObjects
+            for tweet in self.tweets! {
                 print(tweet.tweet)
             }
+            self.tableView.reloadData()
         }
         
-        tableView.reloadData()
 
         // Do any additional setup after loading the view.
     }
@@ -47,8 +47,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tweets != nil {
-            return tweets!.count
+        print(tweets)
+        if self.tweets != nil {
+            return self.tweets!.count
         } else {
             return 0
         }
