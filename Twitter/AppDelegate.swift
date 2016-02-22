@@ -20,10 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if User.currentUser != nil {
             // go to tweet screen
-            print("in a new place")
             let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController")
             
-            window?.rootViewController = vc
+            let nav = UINavigationController(rootViewController: vc)
+            
+            window?.rootViewController = nav
         }
         
         

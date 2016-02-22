@@ -8,19 +8,26 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+
+    @IBOutlet weak var tableView: UITableView!
 
     var tweets: [Tweet]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         
         TwitterClient.SharedInstance.homeTimelineWithParams(nil) { (tweets, error) -> () in
             self.tweets = tweets
             for tweet in tweets! {
-                print("THIS IS: \(tweet.tweet)")
+                print(tweet.tweet)
             }
         }
+        
+        tableView.reloadData()
 
         // Do any additional setup after loading the view.
     }
@@ -28,6 +35,24 @@ class TweetsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
+        
+        cell.tweetLabel.text = tweets![indexPath.row].tweet as String!
+        cell.usernameLabel.text = tweets![indexPath.row].user!.name as String!
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tweets != nil {
+            return tweets!.count
+        } else {
+            return 0
+        }
+        
     }
     
     @IBAction func onLogout(sender: AnyObject) {
