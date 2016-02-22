@@ -25,6 +25,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         return Static.instance
     }
     
+    func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+        GET("1.1/statuses/home_timeline.json", parameters: params, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
+//            for tweet in tweets {
+//                print("text: \(tweet.tweet), createdAt: \(tweet.createdAt)")
+//            }
+            completion(tweets: tweets, error: nil)
+        }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+            completion(tweets: nil, error: error)
+        })
+        
+    }
+    
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
         loginCompletion = completion
 
@@ -52,16 +65,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             }, failure: { (operation:NSURLSessionDataTask?, error: NSError) -> Void in
                 self.loginCompletion!(user: nil, error: error)
             })
-            
-            TwitterClient.SharedInstance.GET("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
-                var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
-                for tweet in tweets {
-                    print("text: \(tweet.tweet), createdAt: \(tweet.createdAt)")
-                }
-            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error)
-            })
-            
         }) { (error: NSError!) -> Void in
             self.loginCompletion!(user: nil, error: error)
         }
