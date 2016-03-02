@@ -35,8 +35,9 @@ class TweetDetailViewController: UIViewController {
         tweetLabel.text = tweet.tweet
         dateLabel.text = formattedDateTime(tweet.createdAt!)
         
-        var currentReplyImage = UIImage(named: "reply")
-        replyButton.setImage(currentReplyImage, forState: UIControlState.Normal)
+        replyButton.setImage(UIImage(named: "reply"), forState: UIControlState.Normal)
+        retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
+        starButton.setImage(UIImage(named: "star"), forState: UIControlState.Normal)
         if tweet.user?.screenname == User.currentUser?.screenname {
             replyButton.enabled = false
             retweetButton.enabled = false
@@ -49,10 +50,6 @@ class TweetDetailViewController: UIViewController {
         if tweet.favorited == true {
             starButton.enabled = false
         }
-
-        retweetButton.setImage(UIImage(named: "retweet"), forState: UIControlState.Normal)
-        starButton.setImage(UIImage(named: "star"), forState: UIControlState.Normal)
-
     }
 
     override func didReceiveMemoryWarning() {
