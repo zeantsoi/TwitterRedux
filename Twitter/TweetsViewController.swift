@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TweetComposeViewControllerDelegate {
 
 
     @IBOutlet weak var tableView: UITableView!
@@ -19,17 +19,16 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = UITableViewAutomaticDimension
         
-        TwitterClient.SharedInstance.homeTimelineWithParams(nil) { (tweetObjects, error) -> () in
-            self.tweets = tweetObjects
-            for tweet in self.tweets! {
-                print(tweet.tweet)
-            }
-            self.tableView.reloadData()
-        }
-        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
 
         // Do any additional setup after loading the view.
+        
+        loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,12 +41,15 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.tweetLabel.text = tweets![indexPath.row].tweet as String!
         cell.usernameLabel.text = tweets![indexPath.row].user!.name as String!
+        cell.timeLabel.text = timeAgoSinceDate(tweets![indexPath.row].createdAt!)
+//        cell.screenNameLabel.text = "@\(tweets![indexPath.row].user!.screenname!)"
+        let profileImageUrl = NSURL(string: tweets![indexPath.row].user!.profileImageUrl!)
+cell.profileImageView.setImageWithURL(profileImageUrl!)
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(tweets)
         if self.tweets != nil {
             return self.tweets!.count
         } else {
@@ -56,10 +58,46 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if sender is UIBarButtonItem {
+            let tweetComposeViewController = segue.destinationViewController as! TweetComposeViewController
+            tweetComposeViewController.user = User.currentUser!
+            tweetComposeViewController.delegate = self
+        } else {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            
+            let tweet = tweets![indexPath!.row]
+            
+            let tweetDetailViewController = segue.destinationViewController as! TweetDetailViewController
+            tweetDetailViewController.tweet = tweet
+        }
+        
+    }
+    
+    
     @IBAction func onLogout(sender: AnyObject) {
         User.currentUser?.logout()
     }
+    
+    func refreshControlAction(sender: UIRefreshControl!) {
+        loadData()
+        sender.endRefreshing()
+    }
 
+    func loadData() {
+        TwitterClient.SharedInstance.homeTimelineWithParams(nil) { (tweetObjects, error) -> () in
+            self.tweets = tweetObjects
+            self.tableView.reloadData()
+        }
+    }
+    
+    func tweetCompose(tweetComposeViewController: TweetComposeViewController, didSubmit value: Bool) {
+        if value == true {
+            loadData()
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -70,4 +108,41 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     */
 
+    // Source: https://gist.github.com/jacks205/4a77fb1703632eb9ae79
+    func timeAgoSinceDate(date:NSDate, numericDates:Bool = false) -> String {
+        let calendar = NSCalendar.currentCalendar()
+        let now = NSDate()
+        let earliest = now.earlierDate(date)
+        let latest = (earliest == now) ? date : now
+        let components:NSDateComponents = calendar.components([NSCalendarUnit.Minute , NSCalendarUnit.Hour , NSCalendarUnit.Day , NSCalendarUnit.WeekOfYear , NSCalendarUnit.Month , NSCalendarUnit.Year , NSCalendarUnit.Second], fromDate: earliest, toDate: latest, options: NSCalendarOptions())
+        
+        if (components.day >= 1){
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .ShortStyle
+            
+            let dateString = dateFormatter.stringFromDate(date)
+            return dateString
+        } else if (components.hour >= 2) {
+            return "\(components.hour) hours ago"
+        } else if (components.hour >= 1){
+            if (numericDates){
+                return "1 hour ago"
+            } else {
+                return "An hour ago"
+            }
+        } else if (components.minute >= 2) {
+            return "\(components.minute) minutes ago"
+        } else if (components.minute >= 1){
+            if (numericDates){
+                return "1 minute ago"
+            } else {
+                return "A minute ago"
+            }
+        } else if (components.second >= 3) {
+            return "\(components.second) seconds ago"
+        } else {
+            return "Just now"
+        }
+        
+    }
 }

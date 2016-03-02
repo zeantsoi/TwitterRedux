@@ -17,6 +17,8 @@
 		C93BEE1B1C78FB5400E22D9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93BEE1A1C78FB5400E22D9F /* ViewController.swift */; };
 		C93BEE1E1C78FB5400E22D9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C93BEE1C1C78FB5400E22D9F /* Main.storyboard */; };
 		C93BEE201C78FB5400E22D9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C93BEE1F1C78FB5400E22D9F /* Assets.xcassets */; };
+		C950F86E1C86DEC800A47E2B /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C950F86D1C86DEC800A47E2B /* TweetDetailViewController.swift */; };
+		C950F8701C86F66500A47E2B /* TweetComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C950F86F1C86F66500A47E2B /* TweetComposeViewController.swift */; };
 		FE0224DD84B937A3BE23DD2A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1BA2DCF0CEF29280F398EA /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		C93BEE1D1C78FB5400E22D9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C93BEE1F1C78FB5400E22D9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C93BEE241C78FB5400E22D9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C950F86D1C86DEC800A47E2B /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
+		C950F86F1C86F66500A47E2B /* TweetComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetComposeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,8 @@
 				C91AE39A1C78FFA200787D2D /* Twitter.m */,
 				C91AE3991C78FFA200787D2D /* Twitter-Bridging-Header.h */,
 				C91AE3A11C7AF01700787D2D /* TweetsViewController.swift */,
+				C950F86F1C86F66500A47E2B /* TweetComposeViewController.swift */,
+				C950F86D1C86DEC800A47E2B /* TweetDetailViewController.swift */,
 				C91AE3A31C7B050800787D2D /* TweetCell.swift */,
 			);
 			path = Twitter;
@@ -244,9 +250,11 @@
 			files = (
 				C91AE3981C78FE9E00787D2D /* TwitterClient.swift in Sources */,
 				C93BEE1B1C78FB5400E22D9F /* ViewController.swift in Sources */,
+				C950F86E1C86DEC800A47E2B /* TweetDetailViewController.swift in Sources */,
 				C93BEE191C78FB5400E22D9F /* AppDelegate.swift in Sources */,
 				C91AE3A41C7B050800787D2D /* TweetCell.swift in Sources */,
 				C91AE3A01C7ACD4C00787D2D /* Tweet.swift in Sources */,
+				C950F8701C86F66500A47E2B /* TweetComposeViewController.swift in Sources */,
 				C91AE3A21C7AF01700787D2D /* TweetsViewController.swift in Sources */,
 				C91AE39E1C7ACD3E00787D2D /* User.swift in Sources */,
 				C91AE39B1C78FFA200787D2D /* Twitter.m in Sources */,

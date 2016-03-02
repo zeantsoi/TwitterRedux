@@ -25,8 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let nav = UINavigationController(rootViewController: vc)
             
             window?.rootViewController = nav
-        }
-        
+        }        
         
         // Override point for customization after application launch.
         return true

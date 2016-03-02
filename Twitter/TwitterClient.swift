@@ -28,14 +28,38 @@ class TwitterClient: BDBOAuth1SessionManager {
     func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
         GET("1.1/statuses/home_timeline.json", parameters: params, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
-//            for tweet in tweets {
-//                print("text: \(tweet.tweet), createdAt: \(tweet.createdAt)")
-//            }
             completion(tweets: tweets, error: nil)
         }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
             completion(tweets: nil, error: error)
         })
-        
+    }
+    
+     func updateStatusWithParams(params: NSDictionary?, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+        POST("1.1/statuses/update.json", parameters: params, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            completion(tweet: tweet, error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                completion(tweet: nil, error: error)
+        })
+    }
+    
+    func retweetStatusWithId(id_str: String!, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+        POST("1.1/statuses/retweet/\(id_str).json", parameters: nil, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            completion(tweet: tweet, error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                completion(tweet: nil, error: error)
+        })
+    }
+    
+    func createFavoritesWithId(id_str: String!, completion: (tweet: Tweet?, error: NSError?) -> ()) {
+        let params = NSDictionary(dictionary: ["id": id_str])
+        POST("1.1/favorites/create.json", parameters: params, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            completion(tweet: tweet, error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                completion(tweet: nil, error: error)
+        })
     }
     
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
@@ -60,7 +84,6 @@ class TwitterClient: BDBOAuth1SessionManager {
             TwitterClient.SharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
                 var user = User(dictionary: response as! NSDictionary)
                 User.currentUser = user
-                print(user)
                 self.loginCompletion!(user: user, error: nil)
             }, failure: { (operation:NSURLSessionDataTask?, error: NSError) -> Void in
                 self.loginCompletion!(user: nil, error: error)
