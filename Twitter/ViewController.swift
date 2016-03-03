@@ -23,11 +23,14 @@ class ViewController: UIViewController {
 
     @IBAction func onLogin(sender: AnyObject) {
         TwitterClient.SharedInstance.loginWithCompletion() { (user: User?, error: NSError?) in
-            if user != nil {
-                self.performSegueWithIdentifier("loginSegue", sender: self)
-            } else {
-                // handle error
-            }
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            // TODO: fix this!
+            appDelegate.application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil) // Hack to get login to work...
+//            if user != nil {
+//                self.performSegueWithIdentifier("hamburgerSegue", sender: self)
+//            } else {
+//                // handle error
+//            }
         }
     }
 

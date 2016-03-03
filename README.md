@@ -1,47 +1,40 @@
-# Simple Twitter client
+# Project 4 - *Twitter Redux*
 
-This is a simple Twitter client application for iOS submitted as the [week three](http://courses.codepath.com/courses/intro_to_ios/unit/3#!assignment) assignment for CodePath.
+Time spent: 10 hours spent in total
 
-Time spent: 23 hours
+## User Stories
 
-Completed:
+The following **required** functionality is completed:
 
-* [x] User can sign in using OAuth login flow
-* [x] User can view last 20 tweets from their home timeline
-* [x] The current signed in user will be persisted across restarts
-* [x] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
-* [x] User can pull to refresh
-* [x] User can compose a new tweet by tapping on a compose button.
-* [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-* [x] Optional: Replies should be prefixed with the username and the reply_id should be set when posting the tweet
+- [x] Hamburger menu
+- [x] Dragging anywhere in the view should reveal the menu.
+- [x] The menu should include links to your profile, the home timeline, and the mentions view.
+- [x] The menu can look similar to the example or feel free to take liberty with the UI.
+- [ ] Profile page
+- [ ] Contains the user header view
+- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Home Timeline
+- [ ] Tapping on a user image should bring up that user's profile page
 
-*OAuth login flow*
+The following **optional** features are implemented:
 
-![OAuth login flow](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_login.gif)
+- [ ] Profile Page
+- [ ] Implement the paging view for the user description.
+- [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+- [ ] Pulling down the profile page should blur and resize the header image.
+- [x] Account switching
+- [ ] Long press on tab bar to bring up Account view with animation
+- [ ] Tap account to switch to
+- [ ] Include a plus button to Add an Account
+- [ ] Swipe to delete an account
 
-*Persistence across app starts*
+## Video Walkthrough
 
-![Persistence across app starts](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_2.gif)
+Here's a walkthrough of implemented user stories:
 
-*Compose tweets and pull to refresh*
+*Full functionality to-date*
 
-![Compose tweets and pull to refresh](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_compose.gif)
-
-*Features disabled for self tweets*
-
-![Features disabled for self tweets](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_self.gif)
-
-*Reply to tweet*
-
-![Reply to tweet](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_reply.gif)
-
-*Retweet*
-
-![Retweet](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_retweet.gif)
-
-*Favorite*
-
-![Favorite](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_favorite.gif)
+![Full functionality to-date](https://github.com/zeantsoi/TwitterClient/blob/master/twitter_week_4.gif)
 
 Last updated: 3/2/2016
 

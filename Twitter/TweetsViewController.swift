@@ -13,6 +13,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
 
+    let titleString: String! = "Tweets"
     var tweets: [Tweet]?
 
     override func viewDidLoad() {

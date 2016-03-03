@@ -20,12 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if User.currentUser != nil {
             // go to tweet screen
-            let vc = storyboard.instantiateViewControllerWithIdentifier("TweetsViewController")
+            let vc = storyboard.instantiateViewControllerWithIdentifier("HamburgerViewController")
+                        window?.rootViewController = vc
+            let hamburgerViewController = window!.rootViewController as! HamburgerViewController
+//            window?.rootViewController = vc
             
-            let nav = UINavigationController(rootViewController: vc)
+            let menuViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+            menuViewController.hamburgerViewController = hamburgerViewController
             
-            window?.rootViewController = nav
-        }        
+            hamburgerViewController.menuViewController = menuViewController
+            
+//            let nav = UINavigationController(rootViewController: vc)
+            
+//            window?.rootViewController = nav
+        }
         
         // Override point for customization after application launch.
         return true
