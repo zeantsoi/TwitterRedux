@@ -34,7 +34,7 @@ Here's a walkthrough of implemented user stories:
 
 *Full functionality to-date*
 
-![Full functionality to-date](https://github.com/zeantsoi/TwitterRedux/blob/master/twitter_week_4.gif)
+![Full functionality to-date](https://github.com/zeantsoi/TwitterRedux/blob/master/twitter_redux_1.gif)
 
 Last updated: 3/2/2016
 
